@@ -1,9 +1,9 @@
 with payments as (
-    select orderid as order_id
+    select order_id
     ,sum(amount) as amount
-    from raw.stripe.payment
+    from {{ ref('stg_payment') }}
     where status = 'success'
-    group by orderid
+    group by order_id
 )
 select ord.order_id,
 customer.customer_id,
